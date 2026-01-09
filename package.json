@@ -46,6 +46,20 @@
       "subtitle": "Pokédex",
       "description": "Discover the types of moves that are particularly effective against a specific Pokémon.",
       "mode": "view"
+    },
+    {
+      "name": "type_chart",
+      "title": "Type Chart",
+      "subtitle": "Pokédex",
+      "description": "View Pokémon type interactions, including strengths, weaknesses, and immunities.",
+      "mode": "view"
+    },
+    {
+      "name": "nature",
+      "title": "Natures",
+      "subtitle": "Pokédex",
+      "description": "Explore different Pokémon natures and their effects on stat growth.",
+      "mode": "view"
     }
   ],
   "preferences": [

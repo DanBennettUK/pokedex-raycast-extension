@@ -1,10 +1,10 @@
 import { Detail, List } from "@raycast/api";
-import { PokemonV2Pokemontype } from "../../types";
+import { PokemonType } from "../../types";
 import { calculateEffectiveness } from "../../utils";
 
 export default function WeaknessMetadata(props: {
   type?: string;
-  types: PokemonV2Pokemontype[];
+  types: PokemonType[];
 }) {
   const TagListComponent =
     props.type === "detail"
