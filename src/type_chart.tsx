@@ -56,11 +56,11 @@ export default function TypeChart() {
                             source: `types/${type.name}.svg`,
                             tintColor: typeColor[type.name] || Color.PrimaryText,
                         }}
-                        subtitle={`Strong vs: ${strongVs.join(", ") || "None"}`}
+                        subtitle={`Strong vs: ${[...new Set(strongVs)].join(", ") || "None"}`}
                         accessories={[
                             {
                                 tag: {
-                                    value: `Weak vs: ${weakTo.join(", ") || "None"}`,
+                                    value: `Weak vs: ${[...new Set(weakTo)].join(", ") || "None"}`,
                                     color: Color.SecondaryText,
                                 },
                             },
