@@ -1,6 +1,6 @@
 # Pokédex Changelog
 
-## [Type Mastery] - 2026-01-10
+## [Type Mastery] - 2026-01-10 [@DanBennettUK](https://github.com/DanBennettUK)
 
 - Added **Natures** command to explore stat changes and localized names for all Pokémon natures.
 - Added **Type Chart** command for a comprehensive overview of type effectiveness, strengths, and weaknesses.
