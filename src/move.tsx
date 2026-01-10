@@ -73,19 +73,19 @@ export default function PokeMoves(props: { id?: number }) {
                       <List.Item.Detail
                         markdown={
                           move &&
-                          move.pokemon_v2_moveeffect
-                            ?.pokemon_v2_moveeffecteffecttexts.length
+                            move.moveeffect
+                              ?.moveeffecteffecttexts.length
                             ? json2md([
-                                {
-                                  h1: m.name,
-                                },
-                                {
-                                  p: move.pokemon_v2_moveeffect.pokemon_v2_moveeffecteffecttexts[0].short_effect.replace(
-                                    "$effect_chance",
-                                    String(move.move_effect_chance),
-                                  ),
-                                },
-                              ])
+                              {
+                                h1: m.name,
+                              },
+                              {
+                                p: move.moveeffect.moveeffecteffecttexts[0].short_effect.replace(
+                                  "$effect_chance",
+                                  String(move.move_effect_chance),
+                                ),
+                              },
+                            ])
                             : undefined
                         }
                         metadata={move && <MoveMetadata move={move} />}
@@ -102,18 +102,18 @@ export default function PokeMoves(props: { id?: number }) {
                             target={
                               <Descriptions
                                 name={m.name}
-                                entries={move.pokemon_v2_moveflavortexts}
+                                entries={move.moveflavortexts}
                               />
                             }
                           />
-                          {move.pokemon_v2_movenames.length > 0 && (
+                          {move.movenames.length > 0 && (
                             <Action.Push
                               title="Learnset"
                               icon={Icon.List}
                               target={
                                 <MoveLearnset
-                                  name={move.pokemon_v2_movenames[0].name}
-                                  moves={move.pokemon_v2_pokemonmoves}
+                                  name={move.movenames[0].name}
+                                  moves={move.pokemonmoves}
                                 />
                               }
                             />

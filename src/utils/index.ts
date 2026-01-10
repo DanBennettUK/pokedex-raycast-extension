@@ -1,5 +1,5 @@
 import { Detail, getPreferenceValues } from "@raycast/api";
-import { Pokemon, PokemonType } from "../types";
+import { Pokemon, PokemonType, TypeChartType, TypeEfficacy } from "../types";
 
 const { artwork } = getPreferenceValues();
 
@@ -48,20 +48,29 @@ export const typeColor: Record<string, string> = {
   fairy: "#dab4d4",
 };
 
-export const calculateEffectiveness = (types: PokemonType[]) => {
+export const calculateEffectiveness = (
+  types: PokemonType[],
+  allTypes: TypeChartType[],
+) => {
   const effectivenessMap = new Map<string, number>();
   const typeNameMap = new Map<string, string>();
 
-  types.forEach((type) => {
-    type.type.typeefficacies.forEach((efficacy) => {
-      const relationName = efficacy.type.name;
-      const currentFactor = effectivenessMap.get(relationName) || 1;
-      effectivenessMap.set(
-        relationName,
-        (currentFactor * efficacy.damage_factor) / 100,
+  allTypes.forEach((attacker) => {
+    let factor = 1;
+    types.forEach((pType) => {
+      const efficacy = attacker.typeefficacies.find(
+        (eff: any) => eff.target_type_id === pType.type.id,
       );
-      typeNameMap.set(relationName, efficacy.type.typenames[0].name);
+      if (efficacy) {
+        factor = (factor * efficacy.damage_factor) / 100;
+      }
     });
+
+    if (factor !== 1) {
+      const relationName = attacker.name;
+      effectivenessMap.set(relationName, factor);
+      typeNameMap.set(relationName, attacker.typenames[0]?.name || attacker.name);
+    }
   });
 
   const normal: Detail.Metadata.TagList.Item.Props[] = [];
@@ -100,7 +109,7 @@ export const localeName = (
     : pokemon.name;
 };
 
-export const filterPokemonForms = (id: number, pokemons: Pokemon[]) => {
+export const filterPokemonForms = (id: number, pokemons: any[]) => {
   // removes Pokemon forms without official images on pokemon.com
   let formNames: string[] = [];
   let varieties: string[] = [];
@@ -188,7 +197,7 @@ export const filterPokemonForms = (id: number, pokemons: Pokemon[]) => {
     if (varieties.length) {
       varieties.forEach((variety) => {
         const pokemonforms = p.pokemonforms.filter(
-          (f) => f.form_name === variety,
+          (f: any) => f.form_name === variety,
         );
 
         forms.push({

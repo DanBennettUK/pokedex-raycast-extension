@@ -17,13 +17,13 @@ export default function PokemonLearnset(props: {
 }) {
   const moves = props.moves.map((m) => {
     m.move.machines = m.move.machines.filter(
-      (tm) => tm.versiongroupid === m.versiongroup.id,
+      (tm) => tm.version_group_id === m.versiongroup.id,
     );
     return m;
   });
 
   let generations = Object.entries(
-    groupBy(moves, (m) => m.versiongroup.generationid),
+    groupBy(moves, (m) => m.versiongroup.generation_id),
   ).map(([generation_id, groups]) => {
     const versiongroups = groupBy(groups, (g) => g.versiongroup.name);
 
@@ -119,8 +119,8 @@ export default function PokemonLearnset(props: {
                 case 4:
                   text = move.move.machines[0]
                     ? `TM${move.move.machines[0]?.machine_number
-                        .toString()
-                        .padStart(3, "0")}`
+                      .toString()
+                      .padStart(3, "0")}`
                     : "";
                 // eslint-disable-next-line no-fallthrough
                 default:
@@ -141,16 +141,16 @@ export default function PokemonLearnset(props: {
                       markdown={
                         move.move.moveeffect?.moveeffecteffecttexts.length
                           ? json2md([
-                              {
-                                h1: moveName,
-                              },
-                              {
-                                p: move.move.moveeffect.moveeffecteffecttexts[0].short_effect.replace(
-                                  "$effect_chance",
-                                  String(move.move.move_effect_chance),
-                                ),
-                              },
-                            ])
+                            {
+                              h1: moveName,
+                            },
+                            {
+                              p: move.move.moveeffect.moveeffecteffecttexts[0].short_effect.replace(
+                                "$effect_chance",
+                                String(move.move.move_effect_chance),
+                              ),
+                            },
+                          ])
                           : undefined
                       }
                       metadata={<MoveMetadata move={move.move} />}

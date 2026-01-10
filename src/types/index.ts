@@ -49,9 +49,11 @@ export interface PokemonMove {
   move_id: number;
   move_learn_method_id: number;
   order: number;
+  pokemon_id: number;
   move: Move;
   movelearnmethod: MoveLearnMethod;
   versiongroup: VersionGroup;
+  pokemon: Pokemon;
 }
 
 export interface Machine {
@@ -215,6 +217,7 @@ export interface PokemonType {
 }
 
 export interface Type {
+  id: number;
   name: string;
   typenames: Name[];
   typeefficacies: TypeEfficacy[];
@@ -240,6 +243,7 @@ export interface Move {
   movenames: Name[];
   type: PokemonType["type"];
   moveflavortexts: FlavorText[];
+  pokemonmoves: PokemonMove[];
 }
 
 export interface TypeChartType {

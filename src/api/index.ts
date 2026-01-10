@@ -2,7 +2,7 @@
 import { Cache, getPreferenceValues } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { PokeAPI, Pokemon, PokemonMove, TypeChartType, Nature } from "../types";
+import { PokeAPI, Pokemon, PokemonMove, TypeChartType, Nature, Move } from "../types";
 
 const cache = new Cache();
 const { language: language_id, duration } = getPreferenceValues();
@@ -19,7 +19,16 @@ async function fetchDataWithCaching<T>(
   prefix: string,
   isArray = false,
 ): Promise<T | undefined> {
-  const key = `${prefix}-${JSON.stringify(variables)}-${isArray}`;
+  // Create a simple hash of the query to include in the cache key
+  const queryHash = query
+    .split("")
+    .reduce((a, b) => {
+      a = (a << 5) - a + b.charCodeAt(0);
+      return a & a;
+    }, 0)
+    .toString(36);
+
+  const key = `${prefix}-${JSON.stringify(variables)}-${isArray}-${queryHash}`;
   const now = Date.now();
 
   // Check for cache expiration only if expiration is defined
@@ -152,6 +161,7 @@ export const fetchPokemonWithCaching = async (
             name
           }
           type {
+            id
             name
             typenames(where: {language_id: {_eq: $language_id}}) {
               name
@@ -194,6 +204,7 @@ export const fetchPokemonWithCaching = async (
       }
       pokemontypes {
         type {
+          id
           name
           typenames(where: {language_id: {_eq: $language_id}}) {
             name
@@ -282,6 +293,7 @@ export const fetchPokemonWithCaching = async (
           }
           pokemontypes {
             type {
+              id
               name
               typenames(where: {language_id: {_eq: $language_id}}) {
                 name
@@ -336,7 +348,7 @@ export const fetchPokemonWithCaching = async (
 
 export const fetchMoveWithCaching = async (
   move_id: number,
-): Promise<PokemonMove | undefined> => {
+): Promise<Move | undefined> => {
   const query = `query move($language_id: Int, $move_id: Int) {
     move(where: {id: {_eq: $move_id}}) {
       id

@@ -1,9 +1,13 @@
 # Pokédex Changelog
 
-## [Type Mastery] - 2026-01-10 [@DanBennettUK](https://github.com/DanBennettUK)
+## [Type Mastery & Prefix Cleanup] - 2026-01-10 [@DanBennettUK](https://github.com/DanBennettUK)
 
 - Added **Natures** command to explore stat changes and localized names for all Pokémon natures.
 - Added **Type Chart** command for a comprehensive overview of type effectiveness, strengths, and weaknesses.
+- Fixed **Weakness & Resistance** calculations using a robust manual cross-reference logic, resolving issues with missing or incorrect efficacy data from the GraphQL API.
+- Comprehensive **Global Prefix Refactor**: Removed all legacy `pokemon_v2_` prefixes from UI components, types, and API queries to align with the modern PokeAPI GraphQL schema.
+- Fixed a `TypeError` in the **Move Detail** view caused by outdated property names.
+- Optimized API caching with **automatic invalidation** by hashing GraphQL queries into the cache key.
 - Fixed a caching issue in the API layer where language preferences were not correctly respected for some queries (Types/Natures).
 - Refactored `Type Chart` logic into a reusable `TypeDetail` component.
 
