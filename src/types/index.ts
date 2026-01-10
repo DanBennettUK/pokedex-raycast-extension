@@ -275,4 +275,3 @@ export interface Nature {
     statnames: Name[];
   } | null;
 }
-

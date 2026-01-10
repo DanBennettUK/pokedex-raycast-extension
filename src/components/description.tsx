@@ -16,9 +16,7 @@ export default function Descriptions(props: {
       {Object.entries(
         groupBy(
           props.entries,
-          (e) =>
-            e.versiongroup.generation
-              .generationnames[0].name,
+          (e) => e.versiongroup.generation.generationnames[0].name,
         ),
       ).map(([generation, groups]) => {
         return (

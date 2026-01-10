@@ -69,7 +69,10 @@ export const calculateEffectiveness = (
     if (factor !== 1) {
       const relationName = attacker.name;
       effectivenessMap.set(relationName, factor);
-      typeNameMap.set(relationName, attacker.typenames[0]?.name || attacker.name);
+      typeNameMap.set(
+        relationName,
+        attacker.typenames[0]?.name || attacker.name,
+      );
     }
   });
 

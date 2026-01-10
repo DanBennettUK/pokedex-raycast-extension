@@ -2,7 +2,14 @@
 import { Cache, getPreferenceValues } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { PokeAPI, Pokemon, PokemonMove, TypeChartType, Nature, Move } from "../types";
+import {
+  PokeAPI,
+  Pokemon,
+  PokemonMove,
+  TypeChartType,
+  Nature,
+  Move,
+} from "../types";
 
 const cache = new Cache();
 const { language: language_id, duration } = getPreferenceValues();
@@ -465,7 +472,9 @@ export const fetchTypesWithCaching = async (): Promise<
 
   return fetchDataWithCaching(query, variables, "pokemontypes", true);
 };
-export const fetchNaturesWithCaching = async (): Promise<Nature[] | undefined> => {
+export const fetchNaturesWithCaching = async (): Promise<
+  Nature[] | undefined
+> => {
   const query = `query natures($language_id: Int) {
     pokenatures: nature {
       id

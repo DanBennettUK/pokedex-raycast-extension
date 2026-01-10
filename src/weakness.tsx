@@ -25,10 +25,23 @@ import {
 
 const { language } = getPreferenceValues();
 
-export default function PokeWeaknesses() {
+export default function PokeWeaknesses(props: {
+  arguments: { search?: string };
+}) {
+  const { search } = props.arguments;
   const [type, setType] = useState<string>("all");
 
-  const [selectedPokemonId, setSelectedPokemonId] = useState(1);
+  const initialPokemon = useMemo(() => {
+    if (!search) return 1;
+    const found = pokedex.find(
+      (p) =>
+        p.name.toLowerCase().includes(search.toLowerCase()) ||
+        p.id.toString() === search,
+    );
+    return found ? found.id : 1;
+  }, [search]);
+
+  const [selectedPokemonId, setSelectedPokemonId] = useState(initialPokemon);
 
   const { data: pokemon, isLoading } = usePromise(fetchPokemonWithCaching, [
     selectedPokemonId,
@@ -47,10 +60,18 @@ export default function PokeWeaknesses() {
   }, [pokemon]);
 
   const pokemons = useMemo(() => {
-    return type != "all"
-      ? pokedex.filter((p) => p.types.includes(type))
-      : pokedex;
-  }, [type]);
+    let filtered =
+      type != "all" ? pokedex.filter((p) => p.types.includes(type)) : pokedex;
+
+    if (search) {
+      filtered = filtered.filter(
+        (p) =>
+          p.name.toLowerCase().includes(search.toLowerCase()) ||
+          p.id.toString() === search,
+      );
+    }
+    return filtered;
+  }, [type, search]);
 
   const displayWeaknesses = Object.entries(groupBy(pokemons, "generation")).map(
     ([generation, pokemonList]) => {
@@ -84,10 +105,7 @@ export default function PokeWeaknesses() {
                             {pokemon?.pokemontypes.map((type) => (
                               <List.Item.Detail.Metadata.TagList.Item
                                 key={type.type.name}
-                                text={
-                                  type.type.typenames[0]
-                                    .name
-                                }
+                                text={type.type.typenames[0].name}
                                 icon={`types/${type.type.name}.svg`}
                                 color={typeColor[type.type.name]}
                               />

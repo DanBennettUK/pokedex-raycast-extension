@@ -29,21 +29,17 @@ export default function MoveLearnset(props: {
         const filteredMoves = moves
           .map((move) => {
             // removes Pokemon forms without official images on pokemon.com
-            move.pokemon.pokemonspecy.pokemons =
-              filterPokemonForms(
-                move.pokemon.pokemon_species_id,
-                move.pokemon.pokemonspecy
-                  .pokemons,
-              );
+            move.pokemon.pokemonspecy.pokemons = filterPokemonForms(
+              move.pokemon.pokemon_species_id,
+              move.pokemon.pokemonspecy.pokemons,
+            );
 
             return move;
           })
           .filter((move) => {
-            const formIdx =
-              move.pokemon.pokemonspecy.pokemons.findIndex(
-                (p) =>
-                  p.pokemonforms[0].pokemon_id === move.pokemon_id,
-              );
+            const formIdx = move.pokemon.pokemonspecy.pokemons.findIndex(
+              (p) => p.pokemonforms[0].pokemon_id === move.pokemon_id,
+            );
 
             return formIdx > -1;
           });
@@ -58,26 +54,20 @@ export default function MoveLearnset(props: {
           <Grid.Section title={method} key={method}>
             {orderedMoves.map((move) => {
               const nationalDex = move.pokemon.pokemon_species_id;
-              const forms =
-                move.pokemon.pokemonspecy
-                  .pokemons;
+              const forms = move.pokemon.pokemonspecy.pokemons;
 
               const form = forms.find(
-                (f) =>
-                  f.pokemonforms[0].pokemon_id === move.pokemon_id,
+                (f) => f.pokemonforms[0].pokemon_id === move.pokemon_id,
               );
               const formIdx = forms.findIndex(
-                (f) =>
-                  f.pokemonforms[0].pokemon_id === move.pokemon_id,
+                (f) => f.pokemonforms[0].pokemon_id === move.pokemon_id,
               );
               const pokeId =
                 artwork === "pixel" ? move.pokemon_id : nationalDex;
 
               const title =
-                form?.pokemonforms[0].pokemonformnames[0]
-                  ?.pokemon_name ||
-                move.pokemon.pokemonspecy
-                  .pokemonspeciesnames[0].name;
+                form?.pokemonforms[0].pokemonformnames[0]?.pokemon_name ||
+                move.pokemon.pokemonspecy.pokemonspeciesnames[0].name;
 
               return (
                 <Grid.Item

@@ -36,16 +36,34 @@ declare namespace Preferences {
 
 declare namespace Arguments {
   /** Arguments passed to the `pokemon` command */
-  export type Pokemon = {}
+  export type Pokemon = {
+  /** Pokémon name or number */
+  "search": string
+}
   /** Arguments passed to the `ability` command */
-  export type Ability = {}
+  export type Ability = {
+  /** Ability name */
+  "search": string
+}
   /** Arguments passed to the `move` command */
-  export type Move = {}
+  export type Move = {
+  /** Move name */
+  "search": string
+}
   /** Arguments passed to the `weakness` command */
-  export type Weakness = {}
+  export type Weakness = {
+  /** Pokémon name */
+  "search": string
+}
   /** Arguments passed to the `type_chart` command */
-  export type TypeChart = {}
+  export type TypeChart = {
+  /** Type name */
+  "search": string
+}
   /** Arguments passed to the `nature` command */
-  export type Nature = {}
+  export type Nature = {
+  /** Nature name */
+  "search": string
+}
 }
 

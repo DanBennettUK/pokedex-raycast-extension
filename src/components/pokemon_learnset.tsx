@@ -119,8 +119,8 @@ export default function PokemonLearnset(props: {
                 case 4:
                   text = move.move.machines[0]
                     ? `TM${move.move.machines[0]?.machine_number
-                      .toString()
-                      .padStart(3, "0")}`
+                        .toString()
+                        .padStart(3, "0")}`
                     : "";
                 // eslint-disable-next-line no-fallthrough
                 default:
@@ -141,16 +141,16 @@ export default function PokemonLearnset(props: {
                       markdown={
                         move.move.moveeffect?.moveeffecteffecttexts.length
                           ? json2md([
-                            {
-                              h1: moveName,
-                            },
-                            {
-                              p: move.move.moveeffect.moveeffecteffecttexts[0].short_effect.replace(
-                                "$effect_chance",
-                                String(move.move.move_effect_chance),
-                              ),
-                            },
-                          ])
+                              {
+                                h1: moveName,
+                              },
+                              {
+                                p: move.move.moveeffect.moveeffecteffecttexts[0].short_effect.replace(
+                                  "$effect_chance",
+                                  String(move.move.move_effect_chance),
+                                ),
+                              },
+                            ])
                           : undefined
                       }
                       metadata={<MoveMetadata move={move.move} />}

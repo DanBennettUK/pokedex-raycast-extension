@@ -10,6 +10,7 @@
 - Optimized API caching with **automatic invalidation** by hashing GraphQL queries into the cache key.
 - Fixed a caching issue in the API layer where language preferences were not correctly respected for some queries (Types/Natures).
 - Refactored `Type Chart` logic into a reusable `TypeDetail` component.
+- Fixed a **TypeScript error** in the `Type Chart` command where the `types` array could be `undefined` during initial load.
 
 ## [Move Stability] - 2026-01-04
 

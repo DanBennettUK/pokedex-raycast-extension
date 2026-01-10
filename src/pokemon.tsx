@@ -37,7 +37,10 @@ interface LocalPokemon {
 
 const pokedex = pokedexData as LocalPokemon[];
 
-export default function NationalPokedex() {
+export default function NationalPokedex(props: {
+  arguments: { search?: string };
+}) {
+  const { search } = props.arguments;
   const [type, setType] = useState<string>("all");
   const [sort, setSort] = useState<string>("lowest");
   const [randomization, setRandomization] = useState<boolean>(false);
@@ -53,8 +56,16 @@ export default function NationalPokedex() {
     const filtered =
       type != "all" ? sorted.filter((p) => p.types.includes(type)) : sorted;
 
-    setPokemons(filtered);
-  }, [type, sort]);
+    const searched = search
+      ? filtered.filter(
+          (p) =>
+            p.name.toLowerCase().includes(search.toLowerCase()) ||
+            p.id.toString() === search,
+        )
+      : filtered;
+
+    setPokemons(searched);
+  }, [type, sort, search]);
 
   return (
     <Grid

@@ -8,13 +8,23 @@ import {
     getPreferenceValues,
 } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
+import { useMemo } from "react";
 import { fetchTypesWithCaching } from "./api";
 import { TypeChartType } from "./types";
 import { typeColor } from "./utils";
 import { TypeDetail } from "./components/TypeDetail";
 
-export default function TypeChart() {
+export default function TypeChart(props: { arguments: { search?: string } }) {
+    const { search } = props.arguments;
     const { data: types, isLoading } = usePromise(fetchTypesWithCaching);
+
+    const filteredTypes = useMemo(() => {
+        if (!search || !types) return types;
+        return types.filter((t) => {
+            const typeName = t.typenames[0]?.name || t.name;
+            return typeName.toLowerCase().includes(search.toLowerCase());
+        });
+    }, [search, types]);
 
     return (
         <List
@@ -22,7 +32,7 @@ export default function TypeChart() {
             throttle
             searchBarPlaceholder="Search Pokémon type..."
         >
-            {types?.map((type) => {
+            {filteredTypes?.map((type) => {
                 const typeName = type.typenames[0]?.name || type.name;
 
                 // Calculate short summary for the list item
@@ -39,7 +49,7 @@ export default function TypeChart() {
                 });
 
                 // Defense: What hits this type super effectively
-                types.forEach((attacker) => {
+                (types || []).forEach((attacker) => {
                     const eff = attacker.typeefficacies.find(
                         (e) => e.target_type_id === type.id,
                     );
@@ -70,7 +80,7 @@ export default function TypeChart() {
                                 <Action.Push
                                     title="View Full Type Details"
                                     icon={Icon.Eye}
-                                    target={<TypeDetail type={type} allTypes={types} />}
+                                    target={<TypeDetail type={type} allTypes={types || []} />}
                                 />
                             </ActionPanel>
                         }
@@ -80,5 +90,3 @@ export default function TypeChart() {
         </List>
     );
 }
-
-

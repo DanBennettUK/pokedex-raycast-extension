@@ -11,7 +11,11 @@ import MoveLearnset from "./components/move_learnset";
 import TypeDropdown from "./components/type_dropdown";
 import moves from "./statics/moves.json";
 
-export default function PokeMoves(props: { id?: number }) {
+export default function PokeMoves(props: {
+  id?: number;
+  arguments?: { search?: string };
+}) {
+  const { search } = props.arguments || {};
   const [type, setType] = useState<string>("all");
   const [selectedMoveId, setSelectedMoveId] = useState<number>(71);
 
@@ -39,11 +43,16 @@ export default function PokeMoves(props: { id?: number }) {
   };
 
   const generations = useMemo(() => {
-    const listing =
-      type === "all" ? moves : moves.filter((m) => m.type === type);
+    let listing = type === "all" ? moves : moves.filter((m) => m.type === type);
+
+    if (search) {
+      listing = listing.filter((m) =>
+        m.name.toLowerCase().includes(search.toLowerCase()),
+      );
+    }
 
     return groupBy(listing, "generation");
-  }, [type]);
+  }, [type, search]);
 
   return (
     <List
@@ -72,20 +81,18 @@ export default function PokeMoves(props: { id?: number }) {
                     !isLoading && (
                       <List.Item.Detail
                         markdown={
-                          move &&
-                            move.moveeffect
-                              ?.moveeffecteffecttexts.length
+                          move && move.moveeffect?.moveeffecteffecttexts.length
                             ? json2md([
-                              {
-                                h1: m.name,
-                              },
-                              {
-                                p: move.moveeffect.moveeffecteffecttexts[0].short_effect.replace(
-                                  "$effect_chance",
-                                  String(move.move_effect_chance),
-                                ),
-                              },
-                            ])
+                                {
+                                  h1: m.name,
+                                },
+                                {
+                                  p: move.moveeffect.moveeffecteffecttexts[0].short_effect.replace(
+                                    "$effect_chance",
+                                    String(move.move_effect_chance),
+                                  ),
+                                },
+                              ])
                             : undefined
                         }
                         metadata={move && <MoveMetadata move={move} />}
