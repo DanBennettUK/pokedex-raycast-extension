@@ -2,13 +2,7 @@
 import { Cache, getPreferenceValues } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import {
-  PokeAPI,
-  Pokemon,
-  TypeChartType,
-  Nature,
-  Move,
-} from "../types";
+import { PokeAPI, Pokemon, TypeChartType, Nature, Move } from "../types";
 
 const cache = new Cache();
 const { language: language_id, duration } = getPreferenceValues();
