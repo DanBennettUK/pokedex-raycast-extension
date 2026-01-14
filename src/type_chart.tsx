@@ -2,15 +2,12 @@ import {
     Action,
     ActionPanel,
     Color,
-    Detail,
     Icon,
     List,
-    getPreferenceValues,
 } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
 import { useMemo } from "react";
 import { fetchTypesWithCaching } from "./api";
-import { TypeChartType } from "./types";
 import { typeColor } from "./utils";
 import { TypeDetail } from "./components/TypeDetail";
 

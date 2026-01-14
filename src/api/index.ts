@@ -5,7 +5,6 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   PokeAPI,
   Pokemon,
-  PokemonMove,
   TypeChartType,
   Nature,
   Move,
@@ -325,11 +324,19 @@ export const fetchPokemonWithCaching = async (
             id
             name
             versiongroup {
+              id
               name
               generation_id
               generation {
                 name
                 generationnames(where: {language_id: {_eq: 9}}) {
+                  name
+                }
+              }
+              versions {
+                id
+                name
+                versionnames(where: {language_id: {_eq: $language_id}}) {
                   name
                 }
               }

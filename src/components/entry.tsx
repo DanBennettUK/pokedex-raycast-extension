@@ -77,8 +77,8 @@ export default function PokedexEntries(props: {
               if (!entry) return null;
 
               const title = group.version_group.versions
-                .map((v) => v.versionnames[0]?.name || v.name)
-                .join(" & ");
+                ?.map((v) => v.versionnames[0]?.name || v.name)
+                .join(" & ") || entry.version.versionnames[0]?.name || entry.version.name;
 
               return (
                 <List.Item
@@ -86,10 +86,12 @@ export default function PokedexEntries(props: {
                   title={title}
                   accessories={[
                     {
-                      text: dexNumber[group.version_group.versions[0].name]
+                      text: group.version_group.versions?.[0]?.name && dexNumber[group.version_group.versions[0].name]
                         ? nationalDexNumber(
                             dexNumber[group.version_group.versions[0].name],
                           )
+                        : entry.version.name && dexNumber[entry.version.name]
+                        ? nationalDexNumber(dexNumber[entry.version.name])
                         : "--",
                     },
                   ]}
