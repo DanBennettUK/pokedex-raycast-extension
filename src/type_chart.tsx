@@ -3,7 +3,7 @@ import { usePromise } from "@raycast/utils";
 import { useMemo } from "react";
 import { fetchTypesWithCaching } from "./api";
 import { typeColor } from "./utils";
-import { TypeDetail } from "./components/TypeDetail";
+import { TypeDetail } from "./components/type_detail";
 
 export default function TypeChart(props: { arguments: { search?: string } }) {
   const { search } = props.arguments;

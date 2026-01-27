@@ -1,8 +1,7 @@
-import { List, getPreferenceValues } from "@raycast/api";
+import { List } from "@raycast/api";
 import json2md from "json2md";
 import groupBy from "lodash.groupby";
 import orderBy from "lodash.orderby";
-import { useState } from "react";
 import { FlavorText, PokemonDexNumber } from "../types";
 import { nationalDexNumber } from "../utils";
 
@@ -19,10 +18,6 @@ export default function PokedexEntries(props: {
       });
     });
   });
-
-  const [language, setLanguage] = useState<string>(
-    getPreferenceValues().language,
-  );
 
   const generations = orderBy(
     Object.entries(
@@ -48,23 +43,6 @@ export default function PokedexEntries(props: {
       throttle
       navigationTitle={`${props.name} | Pokédex Entries`}
       isShowingDetail
-      searchBarAccessory={
-        <List.Dropdown
-          tooltip="Change Language"
-          value={language}
-          onChange={setLanguage}
-        >
-          <List.Dropdown.Item title="English" value="9" />
-          <List.Dropdown.Item title="Spanish" value="7" />
-          <List.Dropdown.Item title="French" value="5" />
-          <List.Dropdown.Item title="German" value="6" />
-          <List.Dropdown.Item title="Italian" value="8" />
-          <List.Dropdown.Item title="Japanese" value="1" />
-          <List.Dropdown.Item title="Korean" value="3" />
-          <List.Dropdown.Item title="Chinese (Simplified)" value="12" />
-          <List.Dropdown.Item title="Chinese (Traditional)" value="11" />
-        </List.Dropdown>
-      }
     >
       {generations.map((generation) => {
         return (

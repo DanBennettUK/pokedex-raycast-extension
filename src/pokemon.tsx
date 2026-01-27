@@ -25,14 +25,6 @@ interface LocalPokemon {
   image_s: string;
   image_m: string;
   localization: Record<string, string>;
-  stats?: {
-    hp: number;
-    attack: number;
-    defense: number;
-    special_attack: number;
-    special_defense: number;
-    speed: number;
-  };
 }
 
 const pokedex = pokedexData as LocalPokemon[];
@@ -81,16 +73,12 @@ export default function NationalPokedex(props: {
           return (
             <Grid.Section title={generation} key={generation}>
               {pokemonList.map((pokemon) => {
-                const statsString = pokemon.stats
-                  ? `H:${pokemon.stats.hp} A:${pokemon.stats.attack} D:${pokemon.stats.defense} C:${pokemon.stats.special_attack} S:${pokemon.stats.special_defense} Sp:${pokemon.stats.speed}`
-                  : "";
-
                 return (
                   <Grid.Item
                     key={pokemon.id}
                     content={getContentImg(pokemon.id)}
                     title={localeName(pokemon, language)}
-                    subtitle={`${nationalDexNumber(pokemon.id)} ${statsString}`}
+                    subtitle={nationalDexNumber(pokemon.id)}
                     keywords={[pokemon.id.toString(), pokemon.name]}
                     actions={
                       <ActionPanel>

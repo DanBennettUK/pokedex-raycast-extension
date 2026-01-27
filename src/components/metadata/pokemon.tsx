@@ -1,4 +1,5 @@
 import { Color, Detail, List } from "@raycast/api";
+import uniqBy from "lodash.uniqby";
 import { Pokemon } from "../../types";
 import { typeColor } from "../../utils";
 
@@ -24,7 +25,10 @@ export default function PokemonMetadata(props: {
       })}
     </Detail.Metadata.TagList>,
     <Detail.Metadata.TagList key="abilities" title="Abilities">
-      {props.pokemon.pokemonabilities.map((ability) => {
+      {uniqBy(
+        props.pokemon.pokemonabilities,
+        (a) => a.ability.abilitynames[0]?.name,
+      ).map((ability) => {
         return (
           <Detail.Metadata.TagList.Item
             key={ability.ability.abilitynames[0].name}
